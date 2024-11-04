@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Matching Web App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Gaya overlay loading */
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Warna semi-transparan */
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1050; /* Tingkatkan z-index agar di atas elemen lainnya */
+        }
+        #loadingOverlay .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        #loadingOverlay p {
+            color: white;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3>Upload Excel File</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-center">Upload file Excel Anda dan sistem akan mencocokkan data di Sheet1 dan Sheet2.</p>
+                        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <input type="file" name="file" accept=".xlsx" class="form-control" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Upload and Process</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay Loading -->
+    <div id="loadingOverlay" class="d-flex flex-column">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p>Processing your file, please wait...</p>
+    </div>
+
+    <!-- Bootstrap JS dan JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript untuk menampilkan overlay loading saat form disubmit
+        document.getElementById('uploadForm').addEventListener('submit', function () {
+            // Tampilkan overlay loading
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            // Nonaktifkan tombol submit untuk mencegah pengiriman ganda
+            this.querySelector('button[type="submit"]').disabled = true;
+        });
+    </script>
+</body>
+</html>
